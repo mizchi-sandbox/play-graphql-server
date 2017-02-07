@@ -4,8 +4,8 @@ const bodyParser = require("body-parser")
 const {makeExecutableSchema} = require("graphql-tools")
 const express = require('express')
 
-const typeDefs = require("./graphql/schema")
-const Mocks = require("./graphql/mocks")
+const typeDefs = require("./graphql/type-defs")
+// const mocks = require("./graphql/mocks")
 const resolvers = require("./graphql/resolvers")
 
 const server = express()

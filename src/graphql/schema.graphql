@@ -1,5 +1,4 @@
-/* @flow */
-const typeDefinitions = `
+# Typse
 type Shop {
   id: ID!
   name: String!
@@ -10,12 +9,11 @@ input ShopInput {
 }
 
 type Mutation {
-  addShop(shop: ShopInput): Shop
+  addShop(input: ShopInput): Shop
 }
 
 type Query {
   shops: [Shop]!
   lastShop: Shop
+  findShopByName(shopName: String!): Shop
 }
-`;
-module.exports = [typeDefinitions]

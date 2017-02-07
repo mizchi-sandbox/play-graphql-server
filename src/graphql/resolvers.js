@@ -1,22 +1,15 @@
 /* @flow */
-type Shop = {
-  id: number,
-  name: string
-};
-
-type ShopInput = {
-  name: string
-};
+import type { Shop, ShopInput, Resolvers } from "./types"
 
 const shopList: Shop[]= [
   {id: 1, name: "foo"},
   {id: 2, name: "bar"}
 ]
 
-const resolvers = {
+const resolvers: Resolvers = {
   Mutation: {
-    addShop(shop: ShopInput): Shop {
-      const newShop = {id: ~~(Math.random() * 1000), ...shop}
+    addShop(obj, args, context, info) {
+      const newShop = {id: ~~(Math.random() * 1000), ...args.input}
       shopList.push(newShop);
       return newShop
     }
@@ -28,6 +21,10 @@ const resolvers = {
 
     lastShop() {
       return shopList[shopList.length - 1]
+    },
+
+    findShopByName(obj, args, context, info) {
+      return shopList.find(i => i.name === args.shopName);
     }
   }
 };
