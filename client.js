@@ -13,40 +13,25 @@ const client = new ApolloClient({
 })
 
 async function main () {
-  await client.mutate({mutation: gql`
+  const ret = await client.mutate({mutation: gql`
   mutation {
-    addShop(input: { name: "baz" }) {id}
+    addPartyMember(input: {partyId: "1", actorId: "2"}) {error}
   }
   `})
+  console.log(ret)
 
-  const foo = await client.query({query: gql`
+  const {data} = await client.query({query: gql`
   query {
-    findShopByName(shopName: "foo") {id, name}
+    getSavedata(id: "1") {
+      id
+      playerName
+      partyMembers {
+        name
+      }
+    }
   }
   `})
-  console.log(foo);
-
-  // const ret = await client.query({query: gql`
-  // query {
-  //   shops {
-  //     id
-  //     name
-  //   }
-  // }
-  // `})
-  // console.log(ret.data);
+  console.log(data.getSavedata)
 }
 
 main()
-
-// client.query({query: gql`
-// query {
-//   shops {
-//     id,
-//     name
-//   }
-// }
-// `})
-// .then(ret => {
-//   console.log(ret.data);
-// })

@@ -1,19 +1,42 @@
-# Typse
-type Shop {
-  id: ID!
-  name: String!
+enum Job {
+  NORVICE
+  WARRIOR
+  MAGE
+  ROGUE
 }
 
-input ShopInput {
+interface Entity {
+  id: ID!
+}
+
+type Actor implements Entity {
+  id: ID!
   name: String!
+  lv: Int!
+  exp: Int!
+  job: Job!
+}
+
+type Savedata {
+  id: ID!
+  playerName: String!
+  partyMembers: [Actor!]!
+}
+
+input AddPartyMemberInput {
+  partyId: ID!
+  actorId: ID!
+}
+
+type Result {
+  error: Boolean!
 }
 
 type Mutation {
-  addShop(input: ShopInput): Shop
+  addPartyMember(input: AddPartyMemberInput): Result
 }
 
 type Query {
-  shops: [Shop]!
-  lastShop: Shop
-  findShopByName(shopName: String!): Shop
+  getSavedata(id: ID!): Savedata
+  getActor(id: ID!): Actor
 }
